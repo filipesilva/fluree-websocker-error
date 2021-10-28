@@ -1,6 +1,6 @@
 # fluree-websocket-error
 
-Repro for ___
+Repro for https://github.com/fluree/db/issues/125
 
 Fails when writing a 1024+ byte event over websocket. The event arrives on the ledger though, and can be seen via http://localhost:8090/exploredb as having one of the predicates as `size-1024`.
 
