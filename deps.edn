@@ -1,2 +1,8 @@
 {:deps
- { com.fluree/db #:mvn{:version "1.0.0-rc30"}}}
+ { com.fluree/db #:mvn{:version "1.0.0-rc31"}}
+ :aliases
+ {:repro {:main-opts ["-m" "repro"]}
+  :workaround {:main-opts ["-m" "repro"]
+               ;; from https://github.com/AsyncHttpClient/async-http-client/blob/9b7298b8f1cb41fed5fb5a1315267be323c875d6/client/src/main/resources/org/asynchttpclient/config/ahc-default.properties#L47
+               ;; ~10mb
+               :jvm-opts ["-Dorg.asynchttpclient.webSocketMaxFrameSize=10000000"]}}}

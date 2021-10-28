@@ -7,7 +7,7 @@ Fails when writing a 1024+ byte event over websocket. The event arrives on the l
 ```
 docker-compose up fluree
 # in another terminal
-clj -X repro/-main
+clj -A:repro
 ```
 
 ```
@@ -18,5 +18,11 @@ io.netty.handler.codec.http.websocketx.CorruptedWebSocketFrameException: Max fra
 	at io.netty.handler.codec.ByteToMessageDecoder.decodeRemovalReentryProtection(ByteToMessageDecoder.java:508)
 	at io.netty.handler.codec.ByteToMessageDecoder.callDecode(ByteToMessageDecoder.java:447)
 	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:276)
+```
+
+Can be worked around by setting a higher `webSocketMaxFrameSize` on env vars, see `deps.edn`:
+```
+# this does not fail
+clj -A:workaround
 ```
 

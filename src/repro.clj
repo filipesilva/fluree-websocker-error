@@ -10,7 +10,7 @@
                 {:_id               :_predicate
                  :_predicate/name   :event/id
                  :_predicate/doc    "A globally unique event id."
-                 :_predicate/unique true
+                 ;;:_predicate/unique true
                  :_predicate/type   :string}
                 {:_id             :_predicate
                  :_predicate/name :event/data
@@ -39,15 +39,18 @@
 
   ;; Add some event in growing size.
 
-  @(fdb/transact conn ledger (tx-size 128))
-  @(fdb/transact conn ledger (tx-size 512))
-  @(fdb/transact conn ledger (tx-size 1024)) ;; fails here, but still writes to ledger
-  #_@(fdb/transact conn ledger (tx-size 5120))
-
+  @(fdb/transact conn ledger (tx-size 100))
+  @(fdb/transact conn ledger (tx-size 500))
+  ;; fails below without the env var, but still writes to ledger
+  ;; error is
+  ;; io.netty.handler.codec.http.websocketx.CorruptedWebSocketFrameException: Max frame length of 10240 has been exceeded.
+  @(fdb/transact conn ledger (tx-size 1000))
+  @(fdb/transact conn ledger (tx-size 10000))
+  @(fdb/transact conn ledger (tx-size 100000))
 
   (fdb/close conn))
 
 (defn -main
-  [_]
+  []
   (repro))
 
